@@ -38,7 +38,7 @@ describe ('Ship', () => {
         expect(ship.isSunk()).toBe(false);
     });
 
-    test('hit() should not increase hits beyond lenght', () => {
+    test('hit() should not increase hits beyond length', () => {
         const ship = new Ship('ship 1', 2);
         ship.hit();
         ship.hit();
@@ -46,11 +46,20 @@ describe ('Ship', () => {
         expect(ship.hits).toBe(2);
     })
 
-    describe('Ship', () => {
-        test('creates a Carrier ship with correct length', () => {
-          const carrier = new Ship(SHIP_TYPES.carrier.name, SHIP_TYPES.carrier.length);
-          expect(carrier.length).toBe(5);
-          expect(carrier.name).toBe('Carrier');
-        });
+    
+    test('creates a Carrier ship with correct length', () => {
+        const carrier = new Ship(SHIP_TYPES.carrier.name, SHIP_TYPES.carrier.length);
+        expect(carrier.length).toBe(5);
+        expect(carrier.name).toBe('Carrier');
     });
+    
+    test('should remain sunk if hit is called after ship is already sunk', () => {
+        const ship = new Ship('ship 1', 2);
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        expect(ship.hits).toBe(2);
+        expect(ship.isSunk()).toBe(true);
+      });
+
 })

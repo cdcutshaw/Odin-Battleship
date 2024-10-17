@@ -1,4 +1,4 @@
-/* import {Ship} from '../modules/ship'; */
+import {Ship, SHIP_TYPES} from '../modules/ship'; 
 
 export class Gameboard {
     constructor () {
@@ -7,18 +7,84 @@ export class Gameboard {
         this.hitCoordinates = [];
     }
 
-    placeShip (ship, startCoord, direction) {
-        let coordinates = [];
-        const [x, y] = startCoord;
+    placeShip(ship, startCoord, direction) {
+        
+        if (!this.isValidPlacement(startCoord, ship.length, direction)) {
+            throw new Error('Invalid ship placement: out of bounds or overlapping.');  // Return false or throw an error if placement is invalid
+        }
+        
+        let coordinates = this.generateShipCoordinates(startCoord, ship.length, direction);
+        
+        this.ships.push({ ship, coordinates });
+        return true;  
+    }
 
-        for (let i =0; i < ship.length; i++) {
-            if (direction == 'horizontal') {
-                coordinates.push([x, y+i]);
-            } else if (direction == 'vertical') {
-                coordinates.push([x+i, y])
+
+    placeShipsRandomly () {
+        const shipsToPlace = Object.values(SHIP_TYPES)
+
+        shipsToPlace.forEach(shipType => {
+            let placed = false;
+
+            while(!placed) {
+                const randomCoord = this.getRandomCoordinates();
+                const randomDirection = this.getRandomDirection();
+
+                if (this.isValidPlacement(randomCoord, shipType.length, randomDirection)) {
+                    const coordinates = this.generateShipCoordinates(randomCoord, shipType.length, randomDirection);
+                    this.placeShip(new Ship(shipType.name, shipType.length), randomCoord, randomDirection);
+                    placed = true;
+                  }
+            }
+        });  
+    }
+
+    getRandomCoordinates() {
+        return[Math.floor(Math.random() * 10), Math.floor(Math.random() * 10) ]
+    }
+
+    getRandomDirection() {
+        return Math.random() < 0.5 ? 'horizontal' : 'vertical';
+    }
+
+    isValidPlacement(coord, shipLength, direction) {
+        const [x, y] = coord;
+      
+        // Check boundaries
+        if (direction === 'horizontal') {
+          if (x + shipLength > 10) return false; 
+        } else if (direction === 'vertical') {
+          if (y + shipLength > 10) return false;
+        }
+      
+        // Check for overlap with other ships
+        const proposedCoordinates = this.generateShipCoordinates(coord, shipLength, direction);
+        for (let ship of this.ships) {
+          for (let shipCoord of ship.coordinates) {
+            for (let proposedCoord of proposedCoordinates) {
+              if (shipCoord[0] === proposedCoord[0] && shipCoord[1] === proposedCoord[1]) {
+                return false; 
+              }
+            }
+          }
+        }
+      
+        return true; 
+      }
+
+    generateShipCoordinates(coord, shipLength, direction) {
+        const [x, y] = coord;
+        const coordinates = [];
+
+        for (let i = 0; i < shipLength; i++) {
+            if (direction === 'horizontal') {
+            coordinates.push([x, y + i]); 
+            } else if (direction === 'vertical') {
+            coordinates.push([x + i, y ]); 
             }
         }
-        this.ships.push({ship, coordinates});
+
+            return coordinates;
     }
 
     receiveAttack(coord) {
@@ -36,6 +102,7 @@ export class Gameboard {
             this.missedShots.push(coord);
         }
     }
+
     areAllShipsSunk() {
         return this.ships.every(({ship}) => ship.isSunk());
     }
