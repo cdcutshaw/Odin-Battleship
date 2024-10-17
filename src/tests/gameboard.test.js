@@ -8,7 +8,7 @@ describe('Gameboard', () => {
     });
 
     test('should be able to place Ships at specific coordinates of gameboard', () => {
-        const ship = new Ship(3);
+        const ship = new Ship('ship 1', 3);
         gameboard.placeShip(ship, [0,0], 'horizontal');
         expect(gameboard.ships).toContainEqual({
             ship: ship,
@@ -16,7 +16,7 @@ describe('Gameboard', () => {
         });
     });
      test('receiveAttack() should determine if a pair of coordinates hit a ship then call hit() on that ship', () =>{
-        const ship = new Ship(3);
+        const ship = new Ship('ship 1', 3);
         gameboard.placeShip(ship, [0,0], 'horizontal');
         gameboard.receiveAttack([0,1]);
         expect(ship.hits).toBe(1);
@@ -34,8 +34,8 @@ describe('Gameboard', () => {
      });
 
      test('should report if all ships are sunk', () => {
-        const ship1 =  new Ship(2);
-        const ship2 = new Ship(2);
+        const ship1 =  new Ship('ship 1', 2);
+        const ship2 = new Ship('ship 1', 2);
         gameboard.placeShip(ship1, [0,0], 'horizontal');
         gameboard.placeShip(ship2, [2,2], 'vertical');
         
@@ -45,10 +45,10 @@ describe('Gameboard', () => {
         gameboard.receiveAttack([3,2]);
 
         expect(gameboard.areAllShipsSunk()).toBe(true);
-     });
+     }); 
      test('should report if all ships are not sunk', () => {
-        const ship1 =  new Ship(2);
-        const ship2 = new Ship(2);
+        const ship1 =  new Ship('ship 1', 2);
+        const ship2 = new Ship('ship 1',2);
         gameboard.placeShip(ship1, [0,0], 'horizontal');
         gameboard.placeShip(ship2, [2,2], 'vertical');
         
