@@ -1,3 +1,67 @@
 body {
-  background-color: green;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+.header {
+  margin-bottom: 20px;
+}
+
+div {
+  border: 1px solid black;
+}
+
+.gameboardContainer, .gameboardSection {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+
+}
+
+
+.gameboardSection {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 40px); /* 10 columns of 40px each */
+  grid-template-rows: repeat(10, 40px);    /* 10 rows of 40px each */
+  gap: 2px; /* Space between the cells */
+  margin: 10px 0;
+  border: 2px solid #333;
+  justify-content: center;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  background-color: #14688f9d;
+  border: 1px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+  background-color: #093244;
+  color: white;
+}
+
+
+.cell.hit {
+  background-color: rgb(126, 5, 5);
+  color: white;
+}
+
+.cell.miss {
+  background-color:#093244;
+  color: white;
 }
