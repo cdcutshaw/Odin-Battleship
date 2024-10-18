@@ -6,6 +6,74 @@
     <title>Battleship</title>
   </head>
   <body>
-    <div>test</div>
+    <div class="header">
+      <h1>Batthleship</h1>
+    </div>
+    <div class="gameboardContainer">
+        <div class="gameboardSection" >
+          <div class="unplacedShipsContainer">
+            <h2>Available Ships</h2>
+            <div id="p1ShipsToBePlaced">
+              <div id="carrier">Carrier</div>
+              <div id="battleship">Battleship</div>
+              <div id="cruiser">Cruiser</div>
+              <div id="submarine">Submarine</div>
+              <div id="destroyer">Destroyer</div>
+            </div>
+          </div>
+
+            <div>
+              <h2>Player 1(computer)</h2>
+              <div id="player1-board" class="board"></div>
+              <div class="playerScore">Score: <span id="player1-score">0</span></div>
+            </div>
+        </div>
+        <div class="gameboardSection">
+          <div class="unplacedShipsContainer">
+            <h2>Available Ships</h2>
+            <div id="p2ShipsToBePlaced">
+              <div id="carrier">Carrier</div>
+              <div id="battleship">Battleship</div>
+              <div id="cruiser">Cruiser</div>
+              <div id="submarine">Submarine</div>
+              <div id="destroyer">Destroyer</div>
+            </div>
+          </div>
+          
+          <div>
+              <h2>Player 2(human)</h2>
+              <div id="player2-board" class="board"></div>
+              <div class="playerScore">Score: <span id="player2-score">0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gameStatus">
+        <button id="startGameBtn">Start Game</button>
+        <button id="restartGameBtn" style="display: none;">Restart Game</button>
+        <div id="gameStatusMessage" class="gameStatusMessage"></div>
+      </div>
+
+
+      <div id="shipPlacementModal" class="modal">
+        <div class="modal-content">
+          <h3>Place Your Ship</h3>
+          <p>Select a ship and direction to place it:</p>
+          <select id="shipSelect">
+            <option value="carrier">Carrier</option>
+            <option value="battleship">Battleship</option>
+            <option value="cruiser">Cruiser</option>
+            <option value="submarine">Submarine</option>
+            <option value="destroyer">Destroyer</option>
+          </select>
+          <select id="directionSelect">
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+          </select>
+          <button id="confirmPlacementBtn">Place Ship</button>
+        </div>
+      
+    
+    
   </body>
 </html>
