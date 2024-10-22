@@ -2,6 +2,7 @@ import {Ship, SHIP_TYPES} from '../modules/ship';
 
 export class Gameboard {
     constructor () {
+        this.shipsToPlace = Object.values(SHIP_TYPES)
         this.ships = [];
         this.missedShots = [];
         this.hitCoordinates = [];
@@ -16,14 +17,15 @@ export class Gameboard {
         let coordinates = this.generateShipCoordinates(startCoord, ship.length, direction);
         
         this.ships.push({ ship, coordinates });
+        //search through shipsToPlace and if ship == any of the ships remove from shipsToPlace
         return true;  
     }
 
 
     placeShipsRandomly () {
-        const shipsToPlace = Object.values(SHIP_TYPES)
+         
 
-        shipsToPlace.forEach(shipType => {
+        this.shipsToPlace.forEach(shipType => {
             let placed = false;
 
             while(!placed) {
@@ -31,7 +33,7 @@ export class Gameboard {
                 const randomDirection = this.getRandomDirection();
 
                 if (this.isValidPlacement(randomCoord, shipType.length, randomDirection)) {
-                    const coordinates = this.generateShipCoordinates(randomCoord, shipType.length, randomDirection);
+                    /* const coordinates = this.generateShipCoordinates(randomCoord, shipType.length, randomDirection); */
                     this.placeShip(new Ship(shipType.name, shipType.length), randomCoord, randomDirection);
                     placed = true;
                   }

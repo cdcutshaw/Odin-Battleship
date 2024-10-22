@@ -65,3 +65,27 @@ div {
   background-color:#093244;
   color: white;
 }
+
+
+.ship {
+  display: flex;
+  margin-bottom: 10px;
+  
+}
+
+.ship-player1 {
+  background-color: #141516; 
+}
+
+.ship-cell {
+  width: 40px;
+  height: 40px;
+  background-color: #141516; 
+  border: 1px solid #fff;
+  
+}
+
+.ship-placed {
+  background-color: #14151642; 
+  opacity: 0.5;
+}

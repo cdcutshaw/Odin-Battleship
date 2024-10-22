@@ -1,4 +1,4 @@
-export const setupTest = "testsss";
+
 
 export const SHIP_TYPES = {
     carrier: { name: 'Carrier', length: 5 },
