@@ -1,5 +1,3 @@
-
-
 export const SHIP_TYPES = {
     carrier: { name: 'Carrier', length: 5 },
     battleship: { name: 'Battleship', length: 4 },

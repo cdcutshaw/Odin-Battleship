@@ -17,7 +17,11 @@ export class Gameboard {
         let coordinates = this.generateShipCoordinates(startCoord, ship.length, direction);
         
         this.ships.push({ ship, coordinates });
-        //search through shipsToPlace and if ship == any of the ships remove from shipsToPlace
+        
+         // Remove the placed ship from shipsToPlace
+        this.shipsToPlace = this.shipsToPlace.filter(shipType => shipType.name !== ship.name);
+    
+
         return true;  
     }
 

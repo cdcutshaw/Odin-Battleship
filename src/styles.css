@@ -7,9 +7,7 @@ body {
   margin-bottom: 20px;
 }
 
-div {
-  border: 1px solid black;
-}
+
 
 .gameboardContainer, .gameboardSection {
   display: flex;
@@ -36,6 +34,9 @@ div {
   margin: 10px 0;
   border: 2px solid #333;
   justify-content: center;
+}
+.disabled  {
+  pointer-events: none;
 }
 
 .cell {
@@ -67,15 +68,18 @@ div {
 }
 
 
-.ship {
+.ship-player1, .ship-player2 {
   display: flex;
   margin-bottom: 10px;
   
 }
 
-.ship-player1 {
+
+.shipCell-player1, .shipCell-player2 {
   background-color: #141516; 
 }
+
+
 
 .ship-cell {
   width: 40px;
