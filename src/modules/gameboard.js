@@ -9,13 +9,19 @@ export class Gameboard {
     }
 
     placeShip(ship, startCoord, direction) {
+
+        if (this.ships.some(placedShip => placedShip.ship.name === ship.name)) {
+            
+            return false;        }
         
         if (!this.isValidPlacement(startCoord, ship.length, direction)) {
+            console.error(`Invalid placement detected for: ${ship.name} at ${startCoord}`);
             throw new Error('Invalid ship placement: out of bounds or overlapping.');  // Return false or throw an error if placement is invalid
         }
         
         let coordinates = this.generateShipCoordinates(startCoord, ship.length, direction);
-        
+        console.log(`Generated coordinates for ${ship.name}:`, coordinates);
+
         this.ships.push({ ship, coordinates });
         
          // Remove the placed ship from shipsToPlace
@@ -58,9 +64,9 @@ export class Gameboard {
       
         // Check boundaries
         if (direction === 'horizontal') {
-          if (x + shipLength > 10) return false; 
+          if (y + shipLength > 10) return false; 
         } else if (direction === 'vertical') {
-          if (y + shipLength > 10) return false;
+          if (x + shipLength > 10) return false;
         }
       
         // Check for overlap with other ships

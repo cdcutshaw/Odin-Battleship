@@ -28,6 +28,9 @@ export const gameFlow = (function () {
 
         initComputerShipPlacement();
         initHumanShipPlacement();
+        
+
+
          
     }
 
@@ -40,21 +43,30 @@ export const gameFlow = (function () {
     }
 
     function initHumanShipPlacement() {
-        display.getShip((selectedShip) => {
-            console.log(selectedShip)
-            display.getCellData((selectedCoordinate) => {
-                console.log(selectedCoordinate)
-                display.getDirection((selectedDirection) => {
-                    console.log(selectedDirection)
+        
+        if (player2.gameboard.shipsToPlace.length === 0) {
+            display.updateStatusMessage("All ships placed! Ready to start the game.");
+            display.toggleBoard('player2', 'inactive');
+            
+            return;
+        }
 
+        display.getShip((selectedShip) => {
+            display.getCellData((selectedCoordinate) => {
+                display.getDirection((selectedDirection) => {
+                    
                     player2.gameboard.placeShip(selectedShip, selectedCoordinate, selectedDirection)
+                    
                     display.renderGameboard('player2', player2.gameboard)
                     display.renderUnplacedShips('player2', player2.gameboard)
+                    display.toggleBoard('player2', 'inactive')
+                    display.updateStatusMessage('select your next ship...')
+                    initHumanShipPlacement();
                 })
             })
         })
         
-
+        
         
 }
 

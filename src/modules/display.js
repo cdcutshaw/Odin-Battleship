@@ -63,9 +63,9 @@ export const display = (function () {
     function getCellData(callback) {
         document.querySelectorAll('.cell').forEach(cell => {
             cell.addEventListener('click', (e) => {
-                const x = parseInt(e.target.dataset.x);
-                const y = parseInt(e.target.dataset.y);
-                let selectedCoordinate = [x, y];
+            const x = parseInt(e.target.dataset.x, 10); 
+            const y = parseInt(e.target.dataset.y, 10); 
+            let selectedCoordinate = [x, y];
                 callback(selectedCoordinate)
             });
             
@@ -102,7 +102,9 @@ export const display = (function () {
     function renderGameboard(playerID, gameboard = null) {
         const boardElement = document.getElementById(`${playerID}-board`);
         boardElement.innerHTML = '';
+        
     
+        const cellsMap = {};
         // Create an empty board
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
@@ -110,6 +112,7 @@ export const display = (function () {
                 cell.classList.add('cell');
                 cell.dataset.x = x;
                 cell.dataset.y = y;
+                cellsMap[`${x}-${y}`] = cell;
                 boardElement.appendChild(cell);
             }
         }
@@ -118,7 +121,7 @@ export const display = (function () {
         if (gameboard) {
             gameboard.ships.forEach(({ ship, coordinates }) => {
                 coordinates.forEach((coord) => {
-                    const cell = document.querySelector(`#${playerID}-board .cell[data-x="${coord[0]}"][data-y="${coord[1]}"]`);
+                    const cell = cellsMap[`${coord[0]}-${coord[1]}`];
                     if (cell) {
                         cell.classList.add(`shipCell-${playerID}`);
                     }
