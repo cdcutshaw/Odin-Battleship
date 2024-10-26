@@ -24,15 +24,20 @@ export const display = (function () {
                 shipElement.appendChild(cell)
             }
             shipsContainer.appendChild(shipElement)
-        });
-
-        
+        });   
     }
 
-    function updateStatusMessage(message) {
-        const statusMessage = document.getElementById('gameStatusMessage');
-        statusMessage.textContent = message;
-      }
+    function updateStatusMessage(message, displayTime = 3000) {
+        return new Promise((resolve) => {
+            const messageElement = document.getElementById('gameStatusMessage');
+            messageElement.textContent = message;
+    
+            setTimeout(() => {
+                messageElement.textContent = ''; // Clear the message after the displayTime
+                resolve();  // Resolve the promise after the time has elapsed
+            }, displayTime);
+        });
+    }
 
     function disableBtn(btn) {
         btn.disabled = true;
@@ -41,11 +46,6 @@ export const display = (function () {
     function enableBtn(btn) {
         btn.disabled = False;
     }
-
-    function onCellClick() {
-        
-    }
-
 
     function getShip (callback) { 
         document.querySelectorAll('.ship-player2').forEach(ship => {
@@ -81,11 +81,9 @@ export const display = (function () {
         });
     }
 
-    function generateModalList () {
-        //generates ship dropdown based on available ships
-    }
-
     function toggleBoard(playerID, activeStatus) {
+        console.log(`Toggling ${playerID}'s board to ${activeStatus}`);
+
         let playerBoard = document.getElementById(`${playerID}-board`);
         if (activeStatus == 'inactive')  {
             playerBoard.classList.add('disabled')
@@ -95,16 +93,10 @@ export const display = (function () {
         
     }
 
-    function renderGameStart(){
-        
-    }
-
     function renderGameboard(playerID, gameboard = null) {
         const boardElement = document.getElementById(`${playerID}-board`);
-        boardElement.innerHTML = '';
+        boardElement.innerHTML = '';  // Clear the board for a fresh render
         
-    
-        const cellsMap = {};
         // Create an empty board
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
@@ -112,39 +104,58 @@ export const display = (function () {
                 cell.classList.add('cell');
                 cell.dataset.x = x;
                 cell.dataset.y = y;
-                cellsMap[`${x}-${y}`] = cell;
                 boardElement.appendChild(cell);
             }
         }
     
         // If a gameboard is provided, render the ships
         if (gameboard) {
+            // Render ships
             gameboard.ships.forEach(({ ship, coordinates }) => {
                 coordinates.forEach((coord) => {
-                    const cell = cellsMap[`${coord[0]}-${coord[1]}`];
+                    const cell = document.querySelector(`#${playerID}-board .cell[data-x="${coord[0]}"][data-y="${coord[1]}"]`);
                     if (cell) {
                         cell.classList.add(`shipCell-${playerID}`);
                     }
                 });
             });
+    
+            // Render hits
+            if (gameboard.hitCoordinates && Array.isArray(gameboard.hitCoordinates)) {
+                gameboard.hitCoordinates.forEach((hit) => {
+                    const hitCell = document.querySelector(`#${playerID}-board .cell[data-x="${hit[0]}"][data-y="${hit[1]}"]`);
+                    if (hitCell) {
+                        hitCell.textContent = "X"
+                        hitCell.classList.add('hit');  // Add a 'hit' class to visually distinguish hit cells
+                    }
+                });
+            }
+    
+            // Render missed shots (optional, if you have a 'missedCoordinates' array)
+            if (gameboard.missedShots && Array.isArray(gameboard.missedShots)) {
+                gameboard.missedShots.forEach((miss) => {
+                    const missCell = document.querySelector(`#${playerID}-board .cell[data-x="${miss[0]}"][data-y="${miss[1]}"]`);
+                    if (missCell) {
+                        missCell.classList.remove('hit')
+                        missCell.textContent = ""
+                        missCell.classList.add('miss');  // Add a 'miss' class for missed shots
+                    }
+                });
+            }
         }
     }
-
-    function updateTurn(){
-
-    }
-
-    function renderGameOver(){
-
-    }
-
-    function handlePlayerClick() {
-
-    }
-
-    function enablePlayerMoves() {
-
-    }
+    
+    
+      function renderGameOver(winner) {
+        const message = winner === player1 ? 'You Win!' : 'Computer Wins!';
+        const gameOverMessage = document.getElementById('game-over-message');
+        gameOverMessage.textContent = message;
+    
+        // Disable further moves
+        toggleBoard('inactive');
+      }
+    
+    
 
     return {
         renderUnplacedShips,
@@ -153,8 +164,9 @@ export const display = (function () {
         getShip,
         getCellData,
         getDirection,
-        renderGameStart,
         renderGameboard, 
-        disableBtn
+        disableBtn,
+        renderGameOver,
+        
     }
 })();  

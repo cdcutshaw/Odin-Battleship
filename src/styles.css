@@ -58,13 +58,12 @@ body {
 
 
 .cell.hit {
-  background-color: rgb(126, 5, 5);
-  color: white;
+  color: red;
 }
 
 .cell.miss {
   background-color:#093244;
-  color: white;
+  
 }
 
 
