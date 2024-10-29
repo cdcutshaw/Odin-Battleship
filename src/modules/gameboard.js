@@ -22,7 +22,7 @@ export class Gameboard {
 
         this.ships.push({ ship, coordinates });
         
-         // Remove the placed ship from shipsToPlace
+        
         this.shipsToPlace = this.shipsToPlace.filter(shipType => shipType.name !== ship.name);
     
 
@@ -31,8 +31,6 @@ export class Gameboard {
 
 
     placeShipsRandomly () {
-         
-
         this.shipsToPlace.forEach(shipType => {
             let placed = false;
 
@@ -60,14 +58,14 @@ export class Gameboard {
     isValidPlacement(coord, shipLength, direction) {
         const [x, y] = coord;
       
-        // Check boundaries
+        
         if (direction === 'horizontal') {
           if (y + shipLength > 10) return false; 
         } else if (direction === 'vertical') {
           if (x + shipLength > 10) return false;
         }
       
-        // Check for overlap with other ships
+        
         const proposedCoordinates = this.generateShipCoordinates(coord, shipLength, direction);
         for (let ship of this.ships) {
           for (let shipCoord of ship.coordinates) {
