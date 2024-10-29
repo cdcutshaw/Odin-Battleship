@@ -8,42 +8,40 @@
   <body>
     <div class="header">
       <h1>Battleship</h1>
+      <div class="btnContainer">
+        <button id="startGameBtn">Start Game</button>
+        <button id="restartGameBtn">Restart Game</button>
+      </div>
+      
+        <div id="gameStatusMessage" class="gameStatusMessage"></div>
+      
     </div>
     <div class="gameboardContainer">
         <div class="gameboardSection" >
-          <div class="unplacedShipsContainer">
-            <h2>Available Ships</h2>
-            <div id="shipsToBePlaced-player1">
-            </div>
-          </div>
-
             <div>
               <h2>Opponent's Board</h2>
               <div id="player1-board" class="board"></div>
-              <div class="playerScore"><span id="player1-score"></span></div>
+            </div>
+            <div class="unplacedShipsContainer">
+              <h3>Available Ships</h3>
+              <div id="shipsToBePlaced-player1">
+              </div>
             </div>
         </div>
         <div class="gameboardSection">
-          <div class="unplacedShipsContainer">
-            <h2>Available Ships</h2>
-            <div id="shipsToBePlaced-player2">
-            </div>
-          </div>
-          
           <div>
               <h2>Your Board</h2>
               <div id="player2-board" class="board"></div>
-              <div class="playerScore"> <span id="player2-score"></span></div>
+          </div>
+          <div class="unplacedShipsContainer">
+            <h3>Available Ships</h3>
+            <div id="shipsToBePlaced-player2">
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="gameStatus">
-        <button id="startGameBtn">Start Game</button>
-        <button id="restartGameBtn" >Restart Game</button>
-        <div id="gameStatusMessage" class="gameStatusMessage"></div>
-      </div>
-
+ 
 
       <dialog>
         <div id="shipPlacementModal" class="modal">

@@ -6,7 +6,7 @@ export const display = (function () {
         shipsContainer.innerHTML = ''; 
 
         gameboard.shipsToPlace.forEach(ship => {
-            const shipLabel = document.createElement('h3');
+            const shipLabel = document.createElement('h4');
             const shipElement = document.createElement('div');
             shipLabel.innerText = ship.name;
             shipElement.appendChild(shipLabel);
@@ -95,7 +95,7 @@ export const display = (function () {
                 const shipName = ship.dataset.shipName;
                 const shipLength = parseInt(ship.dataset.shipLength, 10);
                 ship.style.border = "thick solid black";
-                updateStatusMessage(`Now select a cell to place your ${shipName}`);
+                updateStatusMessage(`Now select a cell to place your ${shipName}...`);
                 toggleBoard('player2', 'active');
                 callback({ name: shipName, length: shipLength });
             });

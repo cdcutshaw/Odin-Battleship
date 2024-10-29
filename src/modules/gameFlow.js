@@ -20,7 +20,7 @@ export const gameFlow = (function () {
     }
 
     async function initGame() {
-        display.updateStatusMessage("Please select a ship to begin placement");
+        display.updateStatusMessage("Please select a ship to begin placement...");
         await initComputerShipPlacement();
         await initHumanShipPlacement('manual'); 
 
@@ -81,7 +81,7 @@ export const gameFlow = (function () {
     // TURN FUNCTIONS
     function takeTurnPlayer1() {
         if (gameOver) return;
-        display.updateStatusMessage("Opponent's turn to strike");
+        display.updateStatusMessage("Opponent's turn to strike...");
         currentPlayer.makeAttack(player2.gameboard);
         display.renderGameboard('player2', player2.gameboard);
         checkForGameOver();
@@ -93,7 +93,7 @@ export const gameFlow = (function () {
     
     function takeTurnPlayer2() {
         if (gameOver) return;
-        display.updateStatusMessage("Your turn to strike");
+        display.updateStatusMessage("Your turn to strike...");
         
         display.getCellData((selectedCoordinate) => {
             currentPlayer.makeAttack(player1.gameboard, selectedCoordinate);
