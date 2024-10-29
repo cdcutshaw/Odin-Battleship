@@ -15,12 +15,10 @@ export class Gameboard {
             return false;        }
         
         if (!this.isValidPlacement(startCoord, ship.length, direction)) {
-            console.error(`Invalid placement detected for: ${ship.name} at ${startCoord}`);
             throw new Error('Invalid ship placement: out of bounds or overlapping.');  // Return false or throw an error if placement is invalid
         }
         
         let coordinates = this.generateShipCoordinates(startCoord, ship.length, direction);
-        console.log(`Generated coordinates for ${ship.name}:`, coordinates);
 
         this.ships.push({ ship, coordinates });
         
@@ -43,7 +41,7 @@ export class Gameboard {
                 const randomDirection = this.getRandomDirection();
 
                 if (this.isValidPlacement(randomCoord, shipType.length, randomDirection)) {
-                    /* const coordinates = this.generateShipCoordinates(randomCoord, shipType.length, randomDirection); */
+                    const coordinates = this.generateShipCoordinates(randomCoord, shipType.length, randomDirection);
                     this.placeShip(new Ship(shipType.name, shipType.length), randomCoord, randomDirection);
                     placed = true;
                   }

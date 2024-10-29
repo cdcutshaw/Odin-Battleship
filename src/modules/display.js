@@ -1,6 +1,4 @@
-import {gameFlow} from '../modules/gameFlow'; 
-import { SHIP_TYPES } from './ship';
-
+import {gameFlow} from '../modules/gameFlow' ;
 export const display = (function () {
     
     function renderUnplacedShips (playerID, gameboard) {
@@ -27,37 +25,39 @@ export const display = (function () {
         });   
     }
 
-    function updateStatusMessage(message, displayTime = 3000) {
-        return new Promise((resolve) => {
+    function updateStatusMessage(message) {
             const messageElement = document.getElementById('gameStatusMessage');
-            messageElement.textContent = message;
-    
-            setTimeout(() => {
-                messageElement.textContent = ''; // Clear the message after the displayTime
-                resolve();  // Resolve the promise after the time has elapsed
-            }, displayTime);
-        });
+            messageElement.textContent = message;  
     }
-
+    
+    
     function disableBtn(btn) {
         btn.disabled = true;
     }
 
     function enableBtn(btn) {
-        btn.disabled = False;
+        btn.disabled = false;
+    }
+
+    
+    function clearCellListeners() {
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.replaceWith(cell.cloneNode(true));  // Clones and replaces to remove listeners
+        });
     }
 
     function getShip (callback) { 
-        document.querySelectorAll('.ship-player2').forEach(ship => {
-            ship.addEventListener('click', () => {
-                const shipName = ship.dataset.shipName;
-                const selectedShip = SHIP_TYPES[shipName.toLowerCase()]
-                ship.style.border = "thick solid black"
-                updateStatusMessage(`Now select a cell to place your ${shipName}`)
-                toggleBoard('player2', 'active')
-                callback(selectedShip)
-            })
-        })
+            document.querySelectorAll('.ship-player2').forEach(ship => {
+                ship.addEventListener('click', () => {
+                    const shipName = ship.dataset.shipName;
+                    const shipLength = parseInt(ship.dataset.shipLength, 10);
+                    ship.style.border = "thick solid black"
+                    updateStatusMessage(`Now select a cell to place your ${shipName}`);
+                    toggleBoard('player2', 'active');
+                    callback({ name: shipName, length: shipLength }); // Pass data for `new Ship(...)`
+                });
+            });
+       
     }
 
     function getCellData(callback) {
@@ -82,15 +82,12 @@ export const display = (function () {
     }
 
     function toggleBoard(playerID, activeStatus) {
-        console.log(`Toggling ${playerID}'s board to ${activeStatus}`);
-
         let playerBoard = document.getElementById(`${playerID}-board`);
         if (activeStatus == 'inactive')  {
             playerBoard.classList.add('disabled')
         } else if (activeStatus == 'active') {
             playerBoard.classList.remove('disabled')
-        }
-        
+        }  
     }
 
     function renderGameboard(playerID, gameboard = null) {
@@ -146,18 +143,20 @@ export const display = (function () {
     }
     
     
-      function renderGameOver(winner) {
-        const message = winner === player1 ? 'You Win!' : 'Computer Wins!';
-        const gameOverMessage = document.getElementById('game-over-message');
+    function renderGameOver(winner) {
+        const message = winner === 'player2' ? 'You Win!' : 'Opponent Wins!';
+        const gameOverMessage = document.getElementById('gameStatusMessage');
         gameOverMessage.textContent = message;
     
         // Disable further moves
-        toggleBoard('inactive');
-      }
+        toggleBoard('player1', 'inactive');
+        toggleBoard('player2', 'inactive');
+    }
     
     
 
     return {
+        
         renderUnplacedShips,
         updateStatusMessage,
         toggleBoard,
@@ -166,7 +165,9 @@ export const display = (function () {
         getDirection,
         renderGameboard, 
         disableBtn,
+        enableBtn,
         renderGameOver,
+        clearCellListeners
         
     }
 })();  
