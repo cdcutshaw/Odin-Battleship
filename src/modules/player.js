@@ -9,8 +9,6 @@ export class Player  {
         this.isComputer = isComputer;
         this.gameboard = new Gameboard();
         this.previousMoves = [];
-
- 
     }
 
     makeAttack(opponentGameboard, coord = null) {
@@ -19,8 +17,7 @@ export class Player  {
         };
 
         if(coord) {
-            opponentGameboard.receiveAttack(coord);
-            
+            opponentGameboard.receiveAttack(coord); 
         }
     }
 
