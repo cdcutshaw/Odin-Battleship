@@ -7,71 +7,54 @@
   <script defer src="main.js"></script></head>
   <body>
     <div class="header">
-      <h1>Batthleship</h1>
+      <h1>Battleship</h1>
+      <div class="btnContainer">
+        <button id="startGameBtn">Start Game</button>
+        <button id="restartGameBtn">Restart Game</button>
+      </div>
+      
+        <div id="gameStatusMessage" class="gameStatusMessage"></div>
+      
     </div>
     <div class="gameboardContainer">
         <div class="gameboardSection" >
-          <div class="unplacedShipsContainer">
-            <h2>Available Ships</h2>
-            <div id="p1ShipsToBePlaced">
-              <div id="carrier">Carrier</div>
-              <div id="battleship">Battleship</div>
-              <div id="cruiser">Cruiser</div>
-              <div id="submarine">Submarine</div>
-              <div id="destroyer">Destroyer</div>
-            </div>
-          </div>
-
             <div>
-              <h2>Player 1(computer)</h2>
+              <h2>Opponent's Board</h2>
               <div id="player1-board" class="board"></div>
-              <div class="playerScore">Score: <span id="player1-score">0</span></div>
+            </div>
+            <div class="unplacedShipsContainer">
+              <h3>Available Ships</h3>
+              <div id="shipsToBePlaced-player1">
+              </div>
             </div>
         </div>
         <div class="gameboardSection">
+          <div>
+              <h2>Your Board</h2>
+              <div id="player2-board" class="board"></div>
+          </div>
           <div class="unplacedShipsContainer">
-            <h2>Available Ships</h2>
-            <div id="p2ShipsToBePlaced">
-              <div id="carrier">Carrier</div>
-              <div id="battleship">Battleship</div>
-              <div id="cruiser">Cruiser</div>
-              <div id="submarine">Submarine</div>
-              <div id="destroyer">Destroyer</div>
+            <h3>Available Ships</h3>
+            <div id="shipsToBePlaced-player2">
             </div>
           </div>
-          
-          <div>
-              <h2>Player 2(human)</h2>
-              <div id="player2-board" class="board"></div>
-              <div class="playerScore">Score: <span id="player2-score">0</span></div>
+        </div>
+      </div>
+
+ 
+
+      <dialog>
+        <div id="shipPlacementModal" class="modal">
+          <div class="modal-content">
+            <h3>Ship Direction?</h3>
+            <select id="directionSelect">
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical">Vertical</option>
+            </select>
+            <button id="placeShipBtn">Place Ship</button>
           </div>
         </div>
-      </div>
-
-      <div class="gameStatus">
-        <button id="startGameBtn">Start Game</button>
-        <button id="restartGameBtn" style="display: none;">Restart Game</button>
-        <div id="gameStatusMessage" class="gameStatusMessage"></div>
-      </div>
-
-
-      <div id="shipPlacementModal" class="modal">
-        <div class="modal-content">
-          <h3>Place Your Ship</h3>
-          <p>Select a ship and direction to place it:</p>
-          <select id="shipSelect">
-            <option value="carrier">Carrier</option>
-            <option value="battleship">Battleship</option>
-            <option value="cruiser">Cruiser</option>
-            <option value="submarine">Submarine</option>
-            <option value="destroyer">Destroyer</option>
-          </select>
-          <select id="directionSelect">
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-          </select>
-          <button id="confirmPlacementBtn">Place Ship</button>
-        </div>
+      </dialog>
       
     
     
